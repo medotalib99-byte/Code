@@ -7,19 +7,31 @@ st.set_page_config(
     layout="wide",
 )
 
-# Custom Styling
+# Custom Styling for a Modern Look
 st.markdown(
     """
     <style>
     .main-header { font-size: 2.5rem; color: #1f77b4; font-weight: bold; }
     .sub-header { font-size: 1.3rem; color: #444444; font-weight: 500; }
-    .card { background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid #1f77b4; }
+    .card { background-color: #f8f9fa; padding: 22px; border-radius: 12px; margin-bottom: 15px; border-left: 5px solid #1f77b4; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .review-card { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 20px; border-radius: 10px; border-left: 4px solid #28a745; margin-bottom: 15px; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Sidebar Navigation
+# Sidebar Navigation & Profile Branding
+st.sidebar.markdown(
+    """
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #1f77b4; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 1.1rem; color: #222;">Mohamed Talib, MSc</h3>
+        <p style="font-size: 0.85rem; color: #666; margin: 2px 0;">Public Health Informatics</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
 st.sidebar.title("Navigation")
 section = st.sidebar.radio(
     "Go to",
@@ -28,18 +40,22 @@ section = st.sidebar.radio(
         "About Me",
         "Services for Students (PhD/Master/BSc)",
         "Services for Organizations (M&E & Proposals)",
+        "Client Reviews",
         "Contact",
     ],
 )
 
+st.sidebar.markdown("---")
+st.sidebar.markdown("🔗 **Connect Online:**")
+st.sidebar.markdown("[LinkedIn Profile](https://www.linkedin.com/in/mohamed-talib-664331158)")
+
 # --- HOME SECTION ---
 if section == "Home":
-    st.markdown('<p class="main-header">Mohamed Mahmoud Talib, MSc</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Public Health Informatics Professional | Africa CDC</p>', unsafe_allow_html=True)
-    st.write("---")
-
-    col1, col2 = st.columns([2, 1])
-    with col1:
+    col_intro, col_img = st.columns([2, 1])
+    with col_intro:
+        st.markdown('<p class="main-header">Mohamed Mahmoud Talib, MSc</p>', unsafe_allow_html=True)
+        st.markdown('<p class="sub-header">Public Health Informatics Professional | Africa CDC</p>', unsafe_allow_html=True)
+        st.write("---")
         st.write(
             "Specializing in **epidemiology, digital health in Africa, and the application of artificial intelligence and data science** to strengthen disease surveillance and epidemic forecasting. Grounded in a commitment to human rights, health equity, and democratic governance, I combine advanced analytics with strategic partnership development to design sustainable, data-driven health solutions, particularly in fragile and conflict-affected settings."
         )
@@ -47,7 +63,15 @@ if section == "Home":
             "With over **seven years of experience**, I support academic researchers, postgraduate students, and humanitarian institutions in achieving rigorous scientific output and impactful program design."
         )
 
-    with col2:
+    with col_img:
+        st.markdown(
+            """
+            <div style="text-align: center; padding-top: 10px;">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80" style="width: 100%; max-height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);">
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         st.info("📍 **Location:** Lusaka, Zambia / Africa CDC\n\n📧 **Email:** medo.talib99@gmail.com\n\n📱 **Phone:** +249912559111")
 
     st.subheader("Core Expertise & Pillars")
@@ -114,18 +138,30 @@ elif section == "Services for Organizations (M&E & Proposals)":
     )
     st.success("💡 **Consulting Inquiries:** Reach out via WhatsApp (+249912559111) or email to discuss institutional terms.")
 
-# --- CONTACT SECTION ---
-elif section == "Contact":
-    st.subheader("Get in Touch")
-    st.write(
-        "Whether you are a student looking for research guidance, an organization seeking "
-        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
+# --- CLIENT REVIEWS SECTION ---
+elif section == "Client Reviews":
+    st.header("Client Reviews & Testimonials")
+    st.write("Here is feedback from students, researchers, and partner organizations who have collaborated on publications, data systems, and proposals.")
+
+    st.markdown(
+        """
+        <div class="review-card">
+            <p><b>"Exceptional biostatistical and manuscript guidance!"</b></p>
+            <p><i>Mohamed's expertise in epidemiological data analysis and R/Python streamlined our outbreak evaluation paper. His rigorous approach ensured publication in a high-indexing journal.</i></p>
+            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— Postgraduate Research Student, Public Health</p>
+        </div>
+        
+        <div class="review-card">
+            <p><b>"Outstanding M&E and Proposal Support"</b></p>
+            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></p>
+            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— NGO Program Director</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
-    col_info, col_form = st.columns([1, 1])
-
-    # Direct Contacts Column
-  elif section == "Contact":
+# --- CONTACT SECTION ---
+elif section == "Contact":
     st.subheader("Get in Touch")
     st.write(
         "Whether you are a student looking for research guidance, an organization seeking "
@@ -139,9 +175,10 @@ elif section == "Contact":
         st.markdown("### Direct Contacts")
         st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
         st.markdown("- **Phone / WhatsApp:** +249912559111")
+        st.markdown("- **LinkedIn:** [Mohamed Talib](https://www.linkedin.com/in/mohamed-talib-664331158)")
         st.markdown("- **Current Base:** Lusaka, Zambia")
 
-    # Interactive Contact Form Column configured to email you directly
+    # Interactive Contact Form Column configured to email you directly with PDF upload support
     with col_form:
         st.markdown(
             """
@@ -175,7 +212,7 @@ elif section == "Contact":
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label><b>Attach Document / Proposal (PDF)</b></label><br>
+                    <label><b>Attach Document / Proposal / CV (PDF)</b></label><br>
                     <input type="file" name="attachment" accept=".pdf" style="width: 100%; padding: 5px;">
                 </div>
                 
