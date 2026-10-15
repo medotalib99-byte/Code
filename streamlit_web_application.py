@@ -4,28 +4,38 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-# --- PAGE CONFIGURATION ---
+# --- PAGE CONFIGURATION & THEME ---
 st.set_page_config(
-    page_title="Mohamed Talib | Public Health Informatics & Research Consultant",
+    page_title="Mohamed Talib, MSc | Public Health Informatics & Research Consultant",
     page_icon="🔬",
     layout="wide",
+    initial_sidebar_state="expanded",
 )
 
-# Custom Styling
+# Professional CSS Styling
 st.markdown(
     """
     <style>
-    .main-header { font-size: 2.5rem; color: #1f77b4; font-weight: bold; }
-    .sub-header { font-size: 1.3rem; color: #444444; font-weight: 500; }
-    .card { background-color: #f8f9fa; padding: 22px; border-radius: 12px; margin-bottom: 15px; border-left: 5px solid #1f77b4; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-    .review-card { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 20px; border-radius: 10px; border-left: 4px solid #28a745; margin-bottom: 15px; }
+    /* Primary Colors & Fonts */
+    .main-title { font-size: 2.6rem; color: #0f4c81; font-weight: 800; margin-bottom: 0.2rem; }
+    .sub-title { font-size: 1.25rem; color: #4a5568; font-weight: 600; margin-bottom: 1.5rem; }
+    .badge { display: inline-block; background-color: #ebf8ff; color: #2b6cb0; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; margin-right: 8px; margin-bottom: 10px; border: 1px solid #bee3f8; }
+    
+    /* Executive Card Styling */
+    .feature-card { background: #ffffff; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; border-top: 4px solid #0f4c81; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 20px; }
+    .stat-box { text-align: center; background: #f7fafc; padding: 16px; border-radius: 10px; border: 1px solid #edf2f7; }
+    .stat-number { font-size: 1.8rem; font-weight: 700; color: #0f4c81; }
+    .stat-label { font-size: 0.85rem; color: #718096; font-weight: 500; }
+    
+    /* Testimonial Box */
+    .testimonial-card { background: #f8fafc; border-left: 4px solid #38a169; padding: 18px; border-radius: 8px; margin-bottom: 15px; }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 
-# Helper function to encode local image safely
+# Safe Image Encoding Helper
 def get_base64_of_bin_file(bin_file):
     if os.path.isfile(bin_file):
         with open(bin_file, "rb") as f:
@@ -34,7 +44,7 @@ def get_base64_of_bin_file(bin_file):
     return None
 
 
-# Encode Pic.jpg
+# Load Local Profile Image
 encoded_image = get_base64_of_bin_file("Pic.jpg")
 
 # --- SIDEBAR NAVIGATION ---
@@ -42,268 +52,93 @@ with st.sidebar:
     if encoded_image:
         st.markdown(
             f"""
-            <div style="text-align: center; margin-bottom: 20px;">
+            <div style="text-align: center; padding-top: 10px; margin-bottom: 15px;">
                 <img src="data:image/jpeg;base64,{encoded_image}" 
-                     style="width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid #1f77b4; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 10px;">
-                <h3 style="margin: 0; font-size: 1.1rem; color: #222;">Mohamed Talib, MSc</h3>
-                <p style="font-size: 0.85rem; color: #666; margin: 2px 0;">Public Health Informatics</p>
+                     style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #0f4c81; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                <h3 style="margin: 10px 0 2px 0; font-size: 1.15rem; color: #1a202c;">Mohamed Talib, MSc</h3>
+                <p style="font-size: 0.85rem; color: #4a5568; margin: 0;">Public Health Informatics Fellow</p>
+                <p style="font-size: 0.80rem; color: #718096; margin: 0;">Africa CDC / ZNPHI</p>
             </div>
             """,
             unsafe_allow_html=True,
         )
     else:
-        st.warning("⚠️ Upload 'Pic.jpg' to your project folder to display your profile picture here.")
+        st.warning("⚠️ Upload 'Pic.jpg' to display your profile picture.")
 
-    st.title("Navigation")
+    st.markdown("### Navigation")
     section = st.radio(
-        "Go to",
+        "Select Page:",
         [
-            "Home",
-            "About Me",
-            "Services for Students (PhD/Master/BSc)",
-            "Services for Organizations (M&E & Proposals)",
-            "Interactive Data & Visualizations",
-            "Photo Gallery & Profile",
-            "Client Reviews",
-            "Contact",
+            "Home & Overview",
+            "About & Leadership",
+            "Research Services (Students)",
+            "Institutional M&E & Proposals",
+            "Interactive Analytics Lab",
+            "Media & Photo Profile",
+            "Client Testimonials",
+            "Contact & Consultations",
         ],
     )
 
     st.markdown("---")
-    st.markdown("🔗 **Connect Online:**")
-    st.markdown("[LinkedIn Profile](https://www.linkedin.com/in/mohamed-talib-664331158)")
+    st.markdown("🌐 **Professional Networks**")
+    st.markdown("[🔗 LinkedIn Profile](https://www.linkedin.com/in/mohamed-talib-664331158)")
+    st.markdown("📧 **Email:** medo.talib99@gmail.com")
+    st.markdown("📱 **WhatsApp:** +249912559111")
 
-# --- HOME SECTION ---
-if section == "Home":
-    col_img, col_intro = st.columns([1, 2.5])
+# --- 1. HOME & OVERVIEW SECTION ---
+if section == "Home & Overview":
+    col_img, col_hero = st.columns([1, 2.5])
 
     with col_img:
         if encoded_image:
             st.markdown(
                 f"""
-                <div style="text-align: center; padding-top: 10px; margin-bottom: 20px;">
-                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-width: 240px; border-radius: 16px; object-fit: cover; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border: 4px solid #1f77b4;">
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        st.info("📍 **Location:** Lusaka, Zambia / Africa CDC\n\n📧 **Email:** medo.talib99@gmail.com\n\n📱 **Phone:** +249912559111")
-
-    with col_intro:
-        st.markdown('<p class="main-header">Mohamed Mahmoud Talib, MSc</p>', unsafe_allow_html=True)
-        st.markdown('<p class="sub-header">Public Health Informatics Professional | Africa CDC</p>', unsafe_allow_html=True)
-        st.write("---")
-        st.write(
-            "Specializing in **epidemiology, digital health in Africa, and the application of artificial intelligence and data science** to strengthen disease surveillance and epidemic forecasting. Grounded in a commitment to human rights, health equity, and democratic governance, I combine advanced analytics with strategic partnership development to design sustainable, data-driven health solutions, particularly in fragile and conflict-affected settings."
-        )
-        st.write(
-            "With over **seven years of experience**, I support academic researchers, postgraduate students, and humanitarian institutions in achieving rigorous scientific output and impactful program design."
-        )
-
-    st.write("---")
-    st.subheader("Core Expertise & Pillars")
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown('<div class="card"><h4>Digital Health & Surveillance</h4><p>Digital disease surveillance, epidemic forecasting, and robust health data governance systems.</p></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="card"><h4>Advanced Analytics & AI</h4><p>Python, R, SQL, Machine Learning, and GIS spatial mapping for public health insights.</p></div>', unsafe_allow_html=True)
-    with c3:
-        st.markdown('<div class="card"><h4>Humanitarian & M&E</h4><p>Situation analysis, M&E frameworks, and grant proposal development in complex environments.</p></div>', unsafe_allow_html=True)
-
-# --- ABOUT ME SECTION ---
-elif section == "About Me":
-    st.header("About Me")
-    st.write(
-        "I am a Public Health Informatics Fellow at **Africa CDC / Zambia National Public Health Institute**, with an extensive background in epidemiology, humanitarian action, and strategic partnerships. My career spans field epidemiology, outbreak investigation, health data governance, and public health leadership."
-    )
-
-    st.subheader("Academic Background")
-    st.markdown(
-        """
-    * **Doctor of Humanitarian Action & Development** (Candidate) – Geneva Institute of Humanitarian & Development Studies
-    * **MSc in Applied Data Science and Artificial Intelligence** – European Global Institute
-    * **Master by Research in Public Health** – University of Bahri
-    * **BSc in Public and Environmental Health** – University of Bahri
-    """
-    )
-
-    st.subheader("Technical & Analytical Stack")
-    st.write(
-        "**Languages & Tools:** Python (pandas, scikit-learn, XGBoost, Plotly, GeoPandas), R, SQL, STATA, SPSS, Power BI, Tableau, DHIS2, ArcGIS, QGIS, and KoboToolbox."
-    )
-
-# --- SERVICES FOR STUDENTS ---
-elif section == "Services for Students (PhD/Master/BSc)":
-    st.header("Research & Publication Support for Students")
-    st.write(
-        "Are you a **PhD, Master's, or BSc student** navigating your thesis or preparing a manuscript for peer-reviewed publication? I offer comprehensive mentorship and technical support across the research lifecycle:"
-    )
-
-    st.markdown(
-        """
-    * **Proposal & Protocol Design:** Framing strong research questions, conceptual frameworks, and methodological rigour.
-    * **Data Analysis & Biostatistics:** Executing advanced quantitative and qualitative data analysis using Python, R, STATA, or SPSS.
-    * **Geospatial Mapping & Visualization:** Building professional spatial maps and data visualizations (QGIS, ArcGIS, Python).
-    * **Scientific Writing & Publishing:** Structuring theses, literature reviews, and drafting manuscripts tailored for high-impact international journals.
-    """
-    )
-    st.success("💡 **Get in touch:** Send your research synopsis or topic to **medo.talib99@gmail.com** to discuss collaboration.")
-
-# --- SERVICES FOR ORGANIZATIONS ---
-elif section == "Services for Organizations (M&E & Proposals)":
-    st.header("Institutional Support: M&E, Humanitarian Proposals & Situation Analysis")
-    st.write(
-        "I partner with NGOs, UN agencies, and health institutions to strengthen program design, monitoring systems, and strategic proposals:"
-    )
-
-    st.markdown(
-        """
-    * **Humanitarian Proposal Development:** Crafting evidence-based grant proposals, logical frameworks (logframes), and Theory of Change models for institutional donors.
-    * **Monitoring & Evaluation (M&E):** Designing robust M&E frameworks, custom performance indicators, and automated reporting dashboards (Power BI, Tableau, DHIS2).
-    * **Situation Analysis & Risk Assessment:** Conducting epidemiological outbreak evaluations, rapid needs assessments, and contextual risk analyses tailored for fragile and conflict-affected settings.
-    """
-    )
-    st.success("💡 **Consulting Inquiries:** Reach out via WhatsApp (+249912559111) or email to discuss institutional terms.")
-
-# --- INTERACTIVE DATA & VISUALIZATIONS SECTION ---
-elif section == "Interactive Data & Visualizations":
-    st.header("Interactive Epidemiological Visualizations")
-    st.write("Explore interactive data models reflecting field surveillance, outbreak trends, and risk forecasting.")
-
-    tab1, tab2 = st.tabs(["📈 Cholera Outbreak Trend Simulator", "🔬 Risk Factor Predictor"])
-
-    with tab1:
-        st.subheader("Simulated Epidemic Curve (Gadarif / Chibombo Clusters)")
-        st.write("Adjust the week range to observe simulated epidemiological caseload trends.")
-
-        weeks_slider = st.slider("Select Surveillance Weeks (W1 - W12)", 1, 12, (1, 10))
-
-        np.random.seed(42)
-        weeks = [f"Week {i}" for i in range(1, 13)]
-        cases = [12, 25, 48, 85, 140, 110, 75, 45, 30, 18, 10, 5]
-        df_chart = pd.DataFrame({"Week": weeks, "Suspected Cases": cases})
-
-        filtered_df = df_chart.iloc[weeks_slider[0] - 1 : weeks_slider[1]]
-        st.bar_chart(filtered_df.set_index("Week"))
-        st.caption("Data source: Field outbreak surveillance records & descriptive epidemiological evaluations.")
-
-    with tab2:
-        st.subheader("Predictive Risk Modeling Tool")
-        st.write("Test risk factors to simulate outbreak vulnerability indices.")
-
-        col_a, col_b = st.columns(2)
-        with col_a:
-            rainfall = st.slider("Weekly Rainfall Index (mm)", 0, 150, 45)
-            sanitation = st.slider("Sanitation Access Score (0-100)", 0, 100, 40)
-        with col_b:
-            pop_density = st.slider("Population Density Factor", 1, 10, 5)
-            water_safety = st.slider("Safe Water Accessibility (%)", 0, 100, 50)
-
-        risk_score = (rainfall * 0.4) + (pop_density * 3) - (sanitation * 0.3) - (water_safety * 0.3)
-
-        st.metric(label="Calculated Outbreak Vulnerability Index", value=f"{max(10, min(95, risk_score)):.1f} / 100")
-        if risk_score > 60:
-            st.error("⚠️ High Risk Alert: Immediate water chlorination and enhanced community engagement recommended.")
-        elif risk_score > 35:
-            st.warning("⚡ Moderate Risk: Active monitoring and routine water quality testing advised.")
-        else:
-            st.success("✅ Low Risk: Stable epidemiological indicators.")
-
-# --- PHOTO GALLERY & PROFILE SECTION ---
-elif section == "Photo Gallery & Profile":
-    st.header("Photo Gallery & Profile Showcase")
-    st.write("View active profile pictures and field activity highlights.")
-
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader("Primary Profile Picture")
-        if encoded_image:
-            st.markdown(
-                f"""
                 <div style="text-align: center; margin-bottom: 15px;">
-                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-height: 380px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);">
+                    <img src="data:image/jpeg;base64,{encoded_image}" 
+                         style="width: 100%; max-width: 260px; border-radius: 16px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.12); border: 4px solid #0f4c81;">
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
-            st.caption("Mohamed Talib, MSc — Public Health Informatics Professional")
-        else:
-            st.info("Upload `Pic.jpg` to your project folder to see it displayed here.")
+        st.info(
+            "📍 **Current Base:** Lusaka, Zambia\n\n"
+            "🏛️ **Affiliation:** Africa CDC / ZNPHI\n\n"
+            "🎓 **Candidate:** Doctorate in Humanitarian Action"
+        )
 
-    with col2:
-        st.subheader("Upload & Preview New Photo")
-        st.write("Upload a new image below to preview how it looks live in your application layout:")
-        uploaded_file = st.file_uploader("Choose an image file (JPG / PNG)", type=["jpg", "jpeg", "png"])
-
-        if uploaded_file is not None:
-            st.image(uploaded_file, caption="Uploaded Image Preview", use_column_width=True)
-            st.success("Image uploaded successfully! To set this permanently as your main photo, save it as `Pic.jpg` in your project folder.")
-
-# --- CLIENT REVIEWS SECTION ---
-elif section == "Client Reviews":
-    st.header("Client Reviews & Testimonials")
-    st.write("Feedback from students, researchers, and partner organizations who have collaborated on publications, data systems, and proposals.")
-
-    st.markdown(
-        """
-        <div class="review-card">
-            <p><b>"Exceptional biostatistical and manuscript guidance!"</b></p>
-            <p><i>Mohamed's expertise in epidemiological data analysis and R/Python streamlined our outbreak evaluation paper. His rigorous approach ensured publication in a high-indexing journal.</i></p>
-            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— Postgraduate Research Student, Public Health</p>
-        </div>
+    with col_hero:
+        st.markdown('<div class="main-title">Mohamed Mahmoud Talib, MSc</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-title">Public Health Informatics Professional | Data Scientist | Field Epidemiologist</div>', unsafe_allow_html=True)
         
-        <div class="review-card">
-            <p><b>"Outstanding M&E and Proposal Support"</b></p>
-            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></p>
-            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— NGO Program Director</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        st.markdown(
+            '<span class="badge">Epidemic Surveillance</span>'
+            '<span class="badge">Artificial Intelligence</span>'
+            '<span class="badge">Biostatistics</span>'
+            '<span class="badge">GIS Spatial Mapping</span>'
+            '<span class="badge">Humanitarian M&E</span>',
+            unsafe_allow_html=True,
+        )
+        
+        st.write(
+            "Specializing at the intersection of **field epidemiology, digital health systems, and artificial intelligence** to strengthen outbreak surveillance and data-driven disease response across Africa. "
+            "Combining advanced biostatistical modeling with strategic project management to guide researchers, academic scholars, and international humanitarian organizations."
+        )
+        
+        st.write(
+            "With over **seven years of experience**, I deliver high-impact quantitative insights, peer-reviewed manuscript development, and institutional M&E frameworks in fragile and conflict-affected settings."
+        )
 
-# --- CONTACT SECTION ---
-elif section == "Contact":
-    st.subheader("Get in Touch")
-    st.write(
-        "Whether you are a student looking for research guidance, an organization seeking "
-        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
-    )
-
-    col_info, col_form = st.columns([1, 1])
-
-    # Direct Contacts Column
-    with col_info:
-        st.markdown("### Direct Contacts")
-        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
-        st.markdown("- **Phone / WhatsApp:** +249912559111")
-        st.markdown("- **LinkedIn:** [Mohamed Talib](https://www.linkedin.com/in/mohamed-talib-664331158)")
-        st.markdown("- **Current Base:** Lusaka, Zambia")
-
-    # Native Streamlit Form for reliable submission and email handling
-    with col_form:
-        with st.form("contact_form", clear_on_submit=True):
-            st.markdown("#### Send a Direct Message")
-            name = st.text_input("Your Name")
-            email_org = st.text_input("Your Email / Organization")
-            inquiry_type = st.selectbox(
-                "Inquiry Type",
-                [
-                    "Student Research Support",
-                    "Services for Organizations (M&E & Proposals)",
-                    "Professional Collaboration",
-                    "Other",
-                ],
-            )
-            message = st.text_area("Brief Message")
-            uploaded_doc = st.file_uploader("Attach Document / Proposal / Photo (PDF or Image)", type=["pdf", "png", "jpg", "jpeg"])
-
-            submit_button = st.form_submit_button("Submit Inquiry")
-
-        if submit_button:
-            if not name or not email_org or not message:
-                st.warning("⚠️ Please fill in all required fields (Name, Email/Org, and Message).")
-            else:
-                st.success("🎉 Thank you! Your inquiry has been logged successfully.")
-                st.info(f"📬 Message queued to be sent to **medo.talib99@gmail.com** from **{name}** ({email_org}).")
-                if uploaded_doc is not None:
-                    st.info(f"📎 Attached file received: **{uploaded_doc.name}**")
+    st.markdown("---")
+    
+    # Impact Metrics
+    st.subheader("Key Impact Pillars")
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.markdown('<div class="stat-box"><div class="stat-number">7+ Years</div><div class="stat-label">Public Health & M&E</div></div>', unsafe_allow_html=True)
+    with m2:
+        st.markdown('<div class="stat-box"><div class="stat-number">Africa CDC</div><div class="stat-label">Informatics Fellow</div></div>', unsafe_allow_html=True)
+    with m3:
+        st.markdown('<div class="stat-box"><div class="stat-number">AI & ML</div><div class="stat-label">Outbreak Modeling</div></div>', unsafe_allow_html=True)
+    with m4:
+        st.markdown('<div class="stat-box"><div class="stat-number">100%</div><div class="stat-label">Data Confidentiality</div></div>', unsafe_allow_html=True)
