@@ -73,7 +73,7 @@ with st.sidebar:
     st.markdown("🔗 **Connect Online:**")
     st.markdown("[LinkedIn Profile](https://www.linkedin.com/in/mohamed-talib-664331158)")
 
-# --- HOME SECTION (WITH PROMINENT PROFILE PICTURE) ---
+# --- HOME SECTION ---
 if section == "Home":
     col_img, col_intro = st.columns([1, 2.5])
 
@@ -254,44 +254,4 @@ elif section == "Client Reviews":
         
         <div class="review-card">
             <p><b>"Outstanding M&E and Proposal Support"</b></p>
-            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></p>
-            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— NGO Program Director</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-# --- CONTACT SECTION ---
-elif section == "Contact":
-    st.subheader("Get in Touch")
-    st.write(
-        "Whether you are a student looking for research guidance, an organization seeking "
-        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
-    )
-
-    col_info, col_form = st.columns([1, 1])
-
-    # Direct Contacts Column
-    with col_info:
-        st.markdown("### Direct Contacts")
-        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
-        st.markdown("- **Phone / WhatsApp:** +249912559111")
-        st.markdown("- **LinkedIn:** [Mohamed Talib](https://www.linkedin.com/in/mohamed-talib-664331158)")
-        st.markdown("- **Current Base:** Lusaka, Zambia")
-
-    # Interactive Contact Form Column configured to email you directly
-    with col_form:
-        st.markdown(
-            """
-            <form action="https://formsubmit.co/medo.talib99@gmail.com" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="_subject" value="New Portfolio Inquiry!">
-                <input type="hidden" name="_captcha" value="false">
-                
-                <div style="margin-bottom: 15px;">
-                    <label><b>Your Name</b></label><br>
-                    <input type="text" name="name" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label><b>Your Email / Organization</b></label><br>
-                    <input type="text" name="email
+            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></
