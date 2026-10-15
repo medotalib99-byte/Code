@@ -57,6 +57,7 @@ with st.sidebar:
             "About Me",
             "Services for Students (PhD/Master/BSc)",
             "Services for Organizations (M&E & Proposals)",
+            "Photo Gallery",
             "Client Reviews",
             "Contact",
         ],
@@ -155,6 +156,42 @@ elif section == "Services for Organizations (M&E & Proposals)":
     """
     )
     st.success("💡 **Consulting Inquiries:** Reach out via WhatsApp (+249912559111) or email to discuss institutional terms.")
+
+# --- PHOTO GALLERY SECTION ---
+elif section == "Photo Gallery":
+    st.header("Professional Gallery & Profile Showcase")
+    st.write("A collection of professional portraits and field activity highlights.")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("Primary Professional Portrait")
+        if encoded_image:
+            st.markdown(
+                f"""
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-height: 400px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);">
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        st.write("**Mohamed Talib, MSc** — Public Health Informatics Professional (Africa CDC / ZNPHI)")
+
+    with col2:
+        st.subheader("Field & Professional Highlights")
+        st.markdown(
+            """
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 12px; border-left: 5px solid #1f77b4; height: 100%;">
+                <p><b>Public Health Consultations & Field Work</b></p>
+                <p>Engaged in outbreak investigations, capacity building workshops, and data governance frameworks across Africa.</p>
+                <ul>
+                    <li>Africa CDC & ZNPHI Deployments</li>
+                    <li>Scientific Writing & GIS Mapping Workshops</li>
+                    <li>Global Health Conference Presentations</li>
+                </ul>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
 # --- CLIENT REVIEWS SECTION ---
 elif section == "Client Reviews":
