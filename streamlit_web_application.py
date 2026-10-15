@@ -4,38 +4,127 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-# --- PAGE CONFIGURATION & THEME ---
+# --- PAGE CONFIGURATION ---
 st.set_page_config(
-    page_title="Mohamed Talib, MSc | Public Health Informatics & Research Consultant",
+    page_title="Mohamed Talib, MSc | Public Health Informatics Consultant",
     page_icon="🔬",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-# Professional CSS Styling
+# --- CIVICA-INSPIRED CUSTOM CSS STYLING ---
 st.markdown(
     """
     <style>
-    /* Primary Colors & Fonts */
-    .main-title { font-size: 2.6rem; color: #0f4c81; font-weight: 800; margin-bottom: 0.2rem; }
-    .sub-title { font-size: 1.25rem; color: #4a5568; font-weight: 600; margin-bottom: 1.5rem; }
-    .badge { display: inline-block; background-color: #ebf8ff; color: #2b6cb0; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; margin-right: 8px; margin-bottom: 10px; border: 1px solid #bee3f8; }
+    /* Main Theme Palette */
+    :root {
+        --civica-dark-green: #004D34;
+        --civica-bright-green: #70E000;
+        --civica-light-bg: #F4F6F5;
+        --civica-text-dark: #1F2937;
+    }
     
-    /* Executive Card Styling */
-    .feature-card { background: #ffffff; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; border-top: 4px solid #0f4c81; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-bottom: 20px; }
-    .stat-box { text-align: center; background: #f7fafc; padding: 16px; border-radius: 10px; border: 1px solid #edf2f7; }
-    .stat-number { font-size: 1.8rem; font-weight: 700; color: #0f4c81; }
-    .stat-label { font-size: 0.85rem; color: #718096; font-weight: 500; }
+    /* Top Header Bar Styling */
+    .brand-header {
+        background-color: #ffffff;
+        padding: 15px 25px;
+        border-bottom: 2px solid #E5E7EB;
+        margin-bottom: 25px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
     
-    /* Testimonial Box */
-    .testimonial-card { background: #f8fafc; border-left: 4px solid #38a169; padding: 18px; border-radius: 8px; margin-bottom: 15px; }
+    .brand-logo {
+        background-color: #004D34;
+        color: #ffffff;
+        padding: 8px 18px;
+        font-weight: 900;
+        font-size: 1.6rem;
+        letter-spacing: 2px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+    
+    /* Hero Banner Overlay Card (Civica Style) */
+    .hero-container {
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #E5E7EB;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+    
+    .hero-overlay-card {
+        background-color: #004D34;
+        color: #ffffff;
+        padding: 35px;
+        border-radius: 8px;
+        margin: 20px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 12px;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.05rem;
+        color: #D1FAE5;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+    
+    .accent-btn {
+        background-color: #70E000;
+        color: #004D34;
+        padding: 10px 24px;
+        font-weight: 700;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    /* Service Cards */
+    .civica-card {
+        background-color: #ffffff;
+        border-top: 5px solid #004D34;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        border-left: 1px solid #E5E7EB;
+        border-right: 1px solid #E5E7EB;
+        border-bottom: 1px solid #E5E7EB;
+        margin-bottom: 20px;
+        height: 100%;
+    }
+    
+    .civica-card h4 {
+        color: #004D34;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    /* Testimonial Banner */
+    .testimonial-box {
+        background-color: #F4F6F5;
+        border-left: 5px solid #70E000;
+        padding: 20px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
 
-# Safe Image Encoding Helper
+# Helper function to encode local image safely
 def get_base64_of_bin_file(bin_file):
     if os.path.isfile(bin_file):
         with open(bin_file, "rb") as f:
@@ -44,101 +133,30 @@ def get_base64_of_bin_file(bin_file):
     return None
 
 
-# Load Local Profile Image
+# Load local profile photo Pic.jpg
 encoded_image = get_base64_of_bin_file("Pic.jpg")
+
+# --- TOP BRAND HEADER BAR ---
+st.markdown(
+    """
+    <div class="brand-header">
+        <div class="brand-logo">MOHAMED TALIB</div>
+        <div style="color: #004D34; font-weight: 600; font-size: 1.05rem;">
+            Public Health Informatics & Research Consultancy
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 # --- SIDEBAR NAVIGATION ---
 with st.sidebar:
     if encoded_image:
         st.markdown(
             f"""
-            <div style="text-align: center; padding-top: 10px; margin-bottom: 15px;">
+            <div style="text-align: center; margin-bottom: 20px;">
                 <img src="data:image/jpeg;base64,{encoded_image}" 
-                     style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #0f4c81; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-                <h3 style="margin: 10px 0 2px 0; font-size: 1.15rem; color: #1a202c;">Mohamed Talib, MSc</h3>
-                <p style="font-size: 0.85rem; color: #4a5568; margin: 0;">Public Health Informatics Fellow</p>
-                <p style="font-size: 0.80rem; color: #718096; margin: 0;">Africa CDC / ZNPHI</p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-    else:
-        st.warning("⚠️ Upload 'Pic.jpg' to display your profile picture.")
-
-    st.markdown("### Navigation")
-    section = st.radio(
-        "Select Page:",
-        [
-            "Home & Overview",
-            "About & Leadership",
-            "Research Services (Students)",
-            "Institutional M&E & Proposals",
-            "Interactive Analytics Lab",
-            "Media & Photo Profile",
-            "Client Testimonials",
-            "Contact & Consultations",
-        ],
-    )
-
-    st.markdown("---")
-    st.markdown("🌐 **Professional Networks**")
-    st.markdown("[🔗 LinkedIn Profile](https://www.linkedin.com/in/mohamed-talib-664331158)")
-    st.markdown("📧 **Email:** medo.talib99@gmail.com")
-    st.markdown("📱 **WhatsApp:** +249912559111")
-
-# --- 1. HOME & OVERVIEW SECTION ---
-if section == "Home & Overview":
-    col_img, col_hero = st.columns([1, 2.5])
-
-    with col_img:
-        if encoded_image:
-            st.markdown(
-                f"""
-                <div style="text-align: center; margin-bottom: 15px;">
-                    <img src="data:image/jpeg;base64,{encoded_image}" 
-                         style="width: 100%; max-width: 260px; border-radius: 16px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.12); border: 4px solid #0f4c81;">
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        st.info(
-            "📍 **Current Base:** Lusaka, Zambia\n\n"
-            "🏛️ **Affiliation:** Africa CDC / ZNPHI\n\n"
-            "🎓 **Candidate:** Doctorate in Humanitarian Action"
-        )
-
-    with col_hero:
-        st.markdown('<div class="main-title">Mohamed Mahmoud Talib, MSc</div>', unsafe_allow_html=True)
-        st.markdown('<div class="sub-title">Public Health Informatics Professional | Data Scientist | Field Epidemiologist</div>', unsafe_allow_html=True)
-        
-        st.markdown(
-            '<span class="badge">Epidemic Surveillance</span>'
-            '<span class="badge">Artificial Intelligence</span>'
-            '<span class="badge">Biostatistics</span>'
-            '<span class="badge">GIS Spatial Mapping</span>'
-            '<span class="badge">Humanitarian M&E</span>',
-            unsafe_allow_html=True,
-        )
-        
-        st.write(
-            "Specializing at the intersection of **field epidemiology, digital health systems, and artificial intelligence** to strengthen outbreak surveillance and data-driven disease response across Africa. "
-            "Combining advanced biostatistical modeling with strategic project management to guide researchers, academic scholars, and international humanitarian organizations."
-        )
-        
-        st.write(
-            "With over **seven years of experience**, I deliver high-impact quantitative insights, peer-reviewed manuscript development, and institutional M&E frameworks in fragile and conflict-affected settings."
-        )
-
-    st.markdown("---")
-    
-    # Impact Metrics
-    st.subheader("Key Impact Pillars")
-    m1, m2, m3, m4 = st.columns(4)
-    with m1:
-        st.markdown('<div class="stat-box"><div class="stat-number">7+ Years</div><div class="stat-label">Public Health & M&E</div></div>', unsafe_allow_html=True)
-    with m2:
-        st.markdown('<div class="stat-box"><div class="stat-number">Africa CDC</div><div class="stat-label">Informatics Fellow</div></div>', unsafe_allow_html=True)
-    with m3:
-        st.markdown('<div class="stat-box"><div class="stat-number">AI & ML</div><div class="stat-label">Outbreak Modeling</div></div>', unsafe_allow_html=True)
-    with m4:
-        st.markdown('<div class="stat-box"><div class="stat-number">100%</div><div class="stat-label">Data Confidentiality</div></div>', unsafe_allow_html=True)
+                     style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #004D34; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                <h3 style="margin: 10px 0 2px 0; font-size: 1.15rem; color: #004D34;">Mohamed Talib, MSc</h3>
+                <p style="font-size: 0.85rem; color: #4B5563; margin: 0;">Public Health Informatics Fellow</p>
+                <p style="font-size: 0.80rem; color: #6B7
