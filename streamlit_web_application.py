@@ -52,7 +52,7 @@ with st.sidebar:
             unsafe_allow_html=True,
         )
     else:
-        st.warning("⚠️ Upload 'Pic.jpg' to your GitHub repo to display your profile picture here.")
+        st.warning("⚠️ Upload 'Pic.jpg' to your project folder to display your profile picture here.")
 
     st.title("Navigation")
     section = st.radio(
@@ -226,7 +226,7 @@ elif section == "Photo Gallery & Profile":
             )
             st.caption("Mohamed Talib, MSc — Public Health Informatics Professional")
         else:
-            st.info("Upload `Pic.jpg` to your GitHub repo to see it displayed here.")
+            st.info("Upload `Pic.jpg` to your project folder to see it displayed here.")
 
     with col2:
         st.subheader("Upload & Preview New Photo")
@@ -235,7 +235,7 @@ elif section == "Photo Gallery & Profile":
 
         if uploaded_file is not None:
             st.image(uploaded_file, caption="Uploaded Image Preview", use_column_width=True)
-            st.success("Image uploaded successfully! To set this permanently as your main photo, save it as `Pic.jpg` in your GitHub repository.")
+            st.success("Image uploaded successfully! To set this permanently as your main photo, save it as `Pic.jpg` in your project folder.")
 
 # --- CLIENT REVIEWS SECTION ---
 elif section == "Client Reviews":
