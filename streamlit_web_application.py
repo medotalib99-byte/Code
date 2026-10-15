@@ -125,13 +125,6 @@ elif section == "Contact":
     col_info, col_form = st.columns([1, 1])
 
     # Direct Contacts Column
-    with col_info:
-        st.markdown("### Direct Contacts")
-        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
-        st.markdown("- **Phone / WhatsApp:** +249912559111")
-        st.markdown("- **Current Base:** Lusaka, Zambia")
-
-    # Interactive Contact Form Column
   elif section == "Contact":
     st.subheader("Get in Touch")
     st.write(
