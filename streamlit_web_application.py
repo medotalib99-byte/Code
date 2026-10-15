@@ -306,4 +306,4 @@ elif section == "Contact":
                 st.success("🎉 Thank you! Your inquiry has been logged successfully.")
                 st.info(f"📬 Message queued to be sent to **medo.talib99@gmail.com** from **{name}** ({email_org}).")
                 if uploaded_doc is not None:
-                    st.info(f"📎 Attached file received: **{uploaded_doc.name}
+                    st.info(f"📎 Attached file received: **{uploaded_doc.name}**")
