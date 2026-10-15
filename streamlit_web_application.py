@@ -116,37 +116,55 @@ elif section == "Services for Organizations (M&E & Proposals)":
 
 # --- CONTACT SECTION ---
 elif section == "Contact":
-    st.header("Get in Touch")
+    st.subheader("Get in Touch")
     st.write(
-        "Whether you are a student looking for research guidance, an organization seeking M&E support, or interested in a professional collaboration, I'd love to hear from you."
+        "Whether you are a student looking for research guidance, an organization seeking "
+        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
     )
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown(
-            """
-        ### Direct Contacts
-        * **Email:** medo.talib99@gmail.com
-        * **Phone / WhatsApp:** +249912559111
-        * **Current Base:** Lusaka, Zambia
-        """
-        )
-    with col2:
-        with st.form("contact_form"):
+    col_info, col_form = st.columns([1, 1])
+
+    # Direct Contacts Column
+    with col_info:
+        st.markdown("### Direct Contacts")
+        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
+        st.markdown("- **Phone / WhatsApp:** +249912559111")
+        st.markdown("- **Current Base:** Lusaka, Zambia")
+
+    # Interactive Contact Form Column
+    with col_form:
+        with st.form("contact_form", clear_on_submit=True):
             name = st.text_input("Your Name")
-            email = st.text_input("Your Email / Organization")
-            service = st.selectbox(
+            email_org = st.text_input("Your Email / Organization")
+            
+            inquiry_type = st.selectbox(
                 "Inquiry Type",
                 [
                     "Student Research Support",
-                    "Institutional M&E / Proposal Writing",
-                    "General Collaboration",
+                    "Services for Organizations (M&E & Proposals)",
+                    "Professional Collaboration",
+                    "Other",
                 ],
             )
+            
             message = st.text_area("Brief Message")
+
+            # PDF File Attachment Feature
+            uploaded_pdf = st.file_uploader(
+                "Attach Document / Proposal (PDF)",
+                type=["pdf"],
+                help="Upload relevant documents or proposals (PDF format)",
+            )
+
+            # Form Submit Button
             submitted = st.form_submit_button("Submit Inquiry")
 
-            if submitted:
-                st.success(
-                    f"Thank you, {name}! Your inquiry regarding {service} has been received. You can also email me directly at medo.talib99@gmail.com."
-                )
+        # Submission Logic
+        if submitted:
+            if not name or not email_org or not message:
+                st.warning("⚠️ Please fill in all required fields (Name, Email/Org, and Message).")
+            else:
+                st.success("🎉 Thank you! Your inquiry has been submitted successfully.")
+                if uploaded_pdf is not None:
+                    st.info(f"📄 Attached File: **{uploaded_pdf.name}** ({uploaded_pdf.size / 1024:.1f} KB)")
+                    
