@@ -1,14 +1,17 @@
-import streamlit as st
 import base64
 import os
+import numpy as np
+import pandas as pd
+import streamlit as st
 
-# --- PAGE CONFIGURATION & STYLING ---
+# --- PAGE CONFIGURATION ---
 st.set_page_config(
     page_title="Mohamed Talib | Public Health Informatics & Research Consultant",
     page_icon="🔬",
     layout="wide",
 )
 
+# Custom Styling
 st.markdown(
     """
     <style>
@@ -21,16 +24,18 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Helper function to load and encode local profile picture
+
+# Helper function to encode local image safely
 def get_base64_of_bin_file(bin_file):
     if os.path.isfile(bin_file):
-        with open(bin_file, 'rb') as f:
+        with open(bin_file, "rb") as f:
             data = f.read()
         return base64.b64encode(data).decode()
     return None
 
-# Load Pic.jpg
-encoded_image = get_base64_of_bin_file('Pic.jpg')
+
+# Encode Pic.jpg
+encoded_image = get_base64_of_bin_file("Pic.jpg")
 
 # --- SIDEBAR NAVIGATION ---
 with st.sidebar:
@@ -47,7 +52,7 @@ with st.sidebar:
             unsafe_allow_html=True,
         )
     else:
-        st.warning("⚠️ Upload 'Pic.jpg' to your GitHub repo to display your photo here.")
+        st.warning("⚠️ Upload 'Pic.jpg' to your GitHub repo to display your profile picture here.")
 
     st.title("Navigation")
     section = st.radio(
@@ -168,25 +173,22 @@ elif section == "Interactive Data & Visualizations":
     with tab1:
         st.subheader("Simulated Epidemic Curve (Gadarif / Chibombo Clusters)")
         st.write("Adjust the week range to observe simulated epidemiological caseload trends.")
-        
+
         weeks_slider = st.slider("Select Surveillance Weeks (W1 - W12)", 1, 12, (1, 10))
-        
-        import pandas as pd
-        import numpy as np
-        
+
         np.random.seed(42)
         weeks = [f"Week {i}" for i in range(1, 13)]
         cases = [12, 25, 48, 85, 140, 110, 75, 45, 30, 18, 10, 5]
         df_chart = pd.DataFrame({"Week": weeks, "Suspected Cases": cases})
-        
-        filtered_df = df_chart.iloc[weeks_slider[0]-1:weeks_slider[1]]
+
+        filtered_df = df_chart.iloc[weeks_slider[0] - 1 : weeks_slider[1]]
         st.bar_chart(filtered_df.set_index("Week"))
         st.caption("Data source: Field outbreak surveillance records & descriptive epidemiological evaluations.")
 
     with tab2:
         st.subheader("Predictive Risk Modeling Tool")
         st.write("Test risk factors to simulate outbreak vulnerability indices.")
-        
+
         col_a, col_b = st.columns(2)
         with col_a:
             rainfall = st.slider("Weekly Rainfall Index (mm)", 0, 150, 45)
@@ -194,9 +196,9 @@ elif section == "Interactive Data & Visualizations":
         with col_b:
             pop_density = st.slider("Population Density Factor", 1, 10, 5)
             water_safety = st.slider("Safe Water Accessibility (%)", 0, 100, 50)
-            
+
         risk_score = (rainfall * 0.4) + (pop_density * 3) - (sanitation * 0.3) - (water_safety * 0.3)
-        
+
         st.metric(label="Calculated Outbreak Vulnerability Index", value=f"{max(10, min(95, risk_score)):.1f} / 100")
         if risk_score > 60:
             st.error("⚠️ High Risk Alert: Immediate water chlorination and enhanced community engagement recommended.")
@@ -230,7 +232,7 @@ elif section == "Photo Gallery & Profile":
         st.subheader("Upload & Preview New Photo")
         st.write("Upload a new image below to preview how it looks live in your application layout:")
         uploaded_file = st.file_uploader("Choose an image file (JPG / PNG)", type=["jpg", "jpeg", "png"])
-        
+
         if uploaded_file is not None:
             st.image(uploaded_file, caption="Uploaded Image Preview", use_column_width=True)
             st.success("Image uploaded successfully! To set this permanently as your main photo, save it as `Pic.jpg` in your GitHub repository.")
@@ -243,4 +245,80 @@ elif section == "Client Reviews":
     st.markdown(
         """
         <div class="review-card">
-            <p><b>"
+            <p><b>"Exceptional biostatistical and manuscript guidance!"</b></p>
+            <p><i>Mohamed's expertise in epidemiological data analysis and R/Python streamlined our outbreak evaluation paper. His rigorous approach ensured publication in a high-indexing journal.</i></p>
+            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— Postgraduate Research Student, Public Health</p>
+        </div>
+        
+        <div class="review-card">
+            <p><b>"Outstanding M&E and Proposal Support"</b></p>
+            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></p>
+            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— NGO Program Director</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+# --- CONTACT SECTION ---
+elif section == "Contact":
+    st.subheader("Get in Touch")
+    st.write(
+        "Whether you are a student looking for research guidance, an organization seeking "
+        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
+    )
+
+    col_info, col_form = st.columns([1, 1])
+
+    # Direct Contacts Column
+    with col_info:
+        st.markdown("### Direct Contacts")
+        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
+        st.markdown("- **Phone / WhatsApp:** +249912559111")
+        st.markdown("- **LinkedIn:** [Mohamed Talib](https://www.linkedin.com/in/mohamed-talib-664331158)")
+        st.markdown("- **Current Base:** Lusaka, Zambia")
+
+    # Interactive Contact Form Column configured to email you directly
+    with col_form:
+        st.markdown(
+            """
+            <form action="https://formsubmit.co/medo.talib99@gmail.com" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_subject" value="New Portfolio Inquiry!">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Your Name</b></label><br>
+                    <input type="text" name="name" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Your Email / Organization</b></label><br>
+                    <input type="text" name="email_or_org" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Inquiry Type</b></label><br>
+                    <select name="inquiry_type" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                        <option>Student Research Support</option>
+                        <option>Services for Organizations (M&E & Proposals)</option>
+                        <option>Professional Collaboration</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Brief Message</b></label><br>
+                    <textarea name="message" rows="4" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label><b>Attach Document / Proposal / Photo (PDF or Image)</b></label><br>
+                    <input type="file" name="attachment" accept=".pdf,.png,.jpg,.jpeg" style="width: 100%; padding: 5px;">
+                </div>
+                
+                <button type="submit" style="background-color: #1f77b4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    Submit Inquiry
+                </button>
+            </form>
+            """,
+            unsafe_allow_html=True,
+        )
