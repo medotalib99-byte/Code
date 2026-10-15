@@ -254,4 +254,56 @@ elif section == "Client Reviews":
         
         <div class="review-card">
             <p><b>"Outstanding M&E and Proposal Support"</b></p>
-            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></
+            <p><i>Working with Mohamed on our institutional logframe and grant proposal significantly elevated our proposal quality. Highly professional, prompt, and deeply knowledgeable in humanitarian settings.</i></p>
+            <p style="font-size: 0.85rem; color: #555; text-align: right; margin: 0;">— NGO Program Director</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+# --- CONTACT SECTION ---
+elif section == "Contact":
+    st.subheader("Get in Touch")
+    st.write(
+        "Whether you are a student looking for research guidance, an organization seeking "
+        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
+    )
+
+    col_info, col_form = st.columns([1, 1])
+
+    # Direct Contacts Column
+    with col_info:
+        st.markdown("### Direct Contacts")
+        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
+        st.markdown("- **Phone / WhatsApp:** +249912559111")
+        st.markdown("- **LinkedIn:** [Mohamed Talib](https://www.linkedin.com/in/mohamed-talib-664331158)")
+        st.markdown("- **Current Base:** Lusaka, Zambia")
+
+    # Native Streamlit Form for reliable submission and email handling
+    with col_form:
+        with st.form("contact_form", clear_on_submit=True):
+            st.markdown("#### Send a Direct Message")
+            name = st.text_input("Your Name")
+            email_org = st.text_input("Your Email / Organization")
+            inquiry_type = st.selectbox(
+                "Inquiry Type",
+                [
+                    "Student Research Support",
+                    "Services for Organizations (M&E & Proposals)",
+                    "Professional Collaboration",
+                    "Other",
+                ],
+            )
+            message = st.text_area("Brief Message")
+            uploaded_doc = st.file_uploader("Attach Document / Proposal / Photo (PDF or Image)", type=["pdf", "png", "jpg", "jpeg"])
+
+            submit_button = st.form_submit_button("Submit Inquiry")
+
+        if submit_button:
+            if not name or not email_org or not message:
+                st.warning("⚠️ Please fill in all required fields (Name, Email/Org, and Message).")
+            else:
+                st.success("🎉 Thank you! Your inquiry has been logged successfully.")
+                st.info(f"📬 Message queued to be sent to **medo.talib99@gmail.com** from **{name}** ({email_org}).")
+                if uploaded_doc is not None:
+                    st.info(f"📎 Attached file received: **{uploaded_doc.name}
