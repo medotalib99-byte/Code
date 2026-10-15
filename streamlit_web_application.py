@@ -2,14 +2,13 @@ import streamlit as st
 import base64
 import os
 
-# --- PAGE INITIALIZATION & STYLING ---
+# --- PAGE CONFIGURATION & STYLING ---
 st.set_page_config(
     page_title="Mohamed Talib | Public Health Informatics & Research Consultant",
     page_icon="🔬",
     layout="wide",
 )
 
-# Custom Styling for a Modern Look
 st.markdown(
     """
     <style>
@@ -22,7 +21,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Helper function to encode local image for sidebar and page display
+# Helper function to load and encode local profile picture
 def get_base64_of_bin_file(bin_file):
     if os.path.isfile(bin_file):
         with open(bin_file, 'rb') as f:
@@ -30,10 +29,11 @@ def get_base64_of_bin_file(bin_file):
         return base64.b64encode(data).decode()
     return None
 
-# --- SIDEBAR NAVIGATION & PROFILE BRANDING ---
+# Load Pic.jpg
+encoded_image = get_base64_of_bin_file('Pic.jpg')
+
+# --- SIDEBAR NAVIGATION ---
 with st.sidebar:
-    encoded_image = get_base64_of_bin_file('Pic.jpg')
-    
     if encoded_image:
         st.markdown(
             f"""
@@ -47,7 +47,7 @@ with st.sidebar:
             unsafe_allow_html=True,
         )
     else:
-        st.warning("⚠️ 'Pic.jpg' not found in repo directory.")
+        st.warning("⚠️ Upload 'Pic.jpg' to your GitHub repo to display your photo here.")
 
     st.title("Navigation")
     section = st.radio(
@@ -57,7 +57,7 @@ with st.sidebar:
             "About Me",
             "Services for Students (PhD/Master/BSc)",
             "Services for Organizations (M&E & Proposals)",
-            "Photo Gallery",
+            "Photo Gallery & Upload",
             "Client Reviews",
             "Contact",
         ],
@@ -157,41 +157,35 @@ elif section == "Services for Organizations (M&E & Proposals)":
     )
     st.success("💡 **Consulting Inquiries:** Reach out via WhatsApp (+249912559111) or email to discuss institutional terms.")
 
-# --- PHOTO GALLERY SECTION ---
-elif section == "Photo Gallery":
-    st.header("Professional Gallery & Profile Showcase")
-    st.write("A collection of professional portraits and field activity highlights.")
+# --- PHOTO GALLERY & UPLOAD SECTION ---
+elif section == "Photo Gallery & Upload":
+    st.header("Photo Gallery & Profile Showcase")
+    st.write("View active profile pictures and field activity highlights.")
 
     col1, col2 = st.columns(2)
     with col1:
-        st.subheader("Primary Professional Portrait")
+        st.subheader("Primary Profile Picture")
         if encoded_image:
             st.markdown(
                 f"""
                 <div style="text-align: center; margin-bottom: 15px;">
-                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-height: 400px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);">
+                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-height: 380px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);">
                 </div>
                 """,
                 unsafe_allow_html=True,
             )
-        st.write("**Mohamed Talib, MSc** — Public Health Informatics Professional (Africa CDC / ZNPHI)")
+            st.caption("Mohamed Talib, MSc — Public Health Informatics Professional")
+        else:
+            st.info("Upload `Pic.jpg` to your GitHub repo to see it displayed here.")
 
     with col2:
-        st.subheader("Field & Professional Highlights")
-        st.markdown(
-            """
-            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 12px; border-left: 5px solid #1f77b4; height: 100%;">
-                <p><b>Public Health Consultations & Field Work</b></p>
-                <p>Engaged in outbreak investigations, capacity building workshops, and data governance frameworks across Africa.</p>
-                <ul>
-                    <li>Africa CDC & ZNPHI Deployments</li>
-                    <li>Scientific Writing & GIS Mapping Workshops</li>
-                    <li>Global Health Conference Presentations</li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.subheader("Upload & Preview New Photo")
+        st.write("Upload a new image below to preview how it looks live in your application layout:")
+        uploaded_file = st.file_uploader("Choose an image file (JPG / PNG)", type=["jpg", "jpeg", "png"])
+        
+        if uploaded_file is not None:
+            st.image(uploaded_file, caption="Uploaded Image Preview", use_column_width=True)
+            st.success("Image uploaded successfully! To set this permanently as your main photo, save it as `Pic.jpg` in your GitHub repository.")
 
 # --- CLIENT REVIEWS SECTION ---
 elif section == "Client Reviews":
@@ -233,7 +227,7 @@ elif section == "Contact":
         st.markdown("- **LinkedIn:** [Mohamed Talib](https://www.linkedin.com/in/mohamed-talib-664331158)")
         st.markdown("- **Current Base:** Lusaka, Zambia")
 
-    # Interactive Contact Form Column configured to email you directly with PDF upload support
+    # Interactive Contact Form Column configured to email you directly with PDF / Photo upload support
     with col_form:
         st.markdown(
             """
@@ -267,8 +261,8 @@ elif section == "Contact":
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <label><b>Attach Document / Proposal / CV (PDF)</b></label><br>
-                    <input type="file" name="attachment" accept=".pdf" style="width: 100%; padding: 5px;">
+                    <label><b>Attach Document / Proposal / Photo (PDF or Image)</b></label><br>
+                    <input type="file" name="attachment" accept=".pdf,.png,.jpg,.jpeg" style="width: 100%; padding: 5px;">
                 </div>
                 
                 <button type="submit" style="background-color: #1f77b4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
