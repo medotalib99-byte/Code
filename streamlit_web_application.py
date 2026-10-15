@@ -132,39 +132,64 @@ elif section == "Contact":
         st.markdown("- **Current Base:** Lusaka, Zambia")
 
     # Interactive Contact Form Column
+  elif section == "Contact":
+    st.subheader("Get in Touch")
+    st.write(
+        "Whether you are a student looking for research guidance, an organization seeking "
+        "M&E support, or interested in a professional collaboration, I'd love to hear from you."
+    )
+
+    col_info, col_form = st.columns([1, 1])
+
+    # Direct Contacts Column
+    with col_info:
+        st.markdown("### Direct Contacts")
+        st.markdown("- **Email:** [medo.talib99@gmail.com](mailto:medo.talib99@gmail.com)")
+        st.markdown("- **Phone / WhatsApp:** +249912559111")
+        st.markdown("- **Current Base:** Lusaka, Zambia")
+
+    # Interactive Contact Form Column configured to email you directly
     with col_form:
-        with st.form("contact_form", clear_on_submit=True):
-            name = st.text_input("Your Name")
-            email_org = st.text_input("Your Email / Organization")
-            
-            inquiry_type = st.selectbox(
-                "Inquiry Type",
-                [
-                    "Student Research Support",
-                    "Services for Organizations (M&E & Proposals)",
-                    "Professional Collaboration",
-                    "Other",
-                ],
-            )
-            
-            message = st.text_area("Brief Message")
+        st.markdown(
+            """
+            <form action="https://formsubmit.co/medo.talib99@gmail.com" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_subject" value="New Portfolio Inquiry!">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Your Name</b></label><br>
+                    <input type="text" name="name" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Your Email / Organization</b></label><br>
+                    <input type="text" name="email_or_org" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Inquiry Type</b></label><br>
+                    <select name="inquiry_type" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                        <option>Student Research Support</option>
+                        <option>Services for Organizations (M&E & Proposals)</option>
+                        <option>Professional Collaboration</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label><b>Brief Message</b></label><br>
+                    <textarea name="message" rows="4" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+                </div>
 
-            # PDF File Attachment Feature
-            uploaded_pdf = st.file_uploader(
-                "Attach Document / Proposal (PDF)",
-                type=["pdf"],
-                help="Upload relevant documents or proposals (PDF format)",
-            )
-
-            # Form Submit Button
-            submitted = st.form_submit_button("Submit Inquiry")
-
-        # Submission Logic
-        if submitted:
-            if not name or not email_org or not message:
-                st.warning("⚠️ Please fill in all required fields (Name, Email/Org, and Message).")
-            else:
-                st.success("🎉 Thank you! Your inquiry has been submitted successfully.")
-                if uploaded_pdf is not None:
-                    st.info(f"📄 Attached File: **{uploaded_pdf.name}** ({uploaded_pdf.size / 1024:.1f} KB)")
-                    
+                <div style="margin-bottom: 15px;">
+                    <label><b>Attach Document / Proposal (PDF)</b></label><br>
+                    <input type="file" name="attachment" accept=".pdf" style="width: 100%; padding: 5px;">
+                </div>
+                
+                <button type="submit" style="background-color: #1f77b4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    Submit Inquiry
+                </button>
+            </form>
+            """,
+            unsafe_allow_html=True,
+        )
