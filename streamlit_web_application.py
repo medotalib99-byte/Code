@@ -73,9 +73,22 @@ with st.sidebar:
     st.markdown("🔗 **Connect Online:**")
     st.markdown("[LinkedIn Profile](https://www.linkedin.com/in/mohamed-talib-664331158)")
 
-# --- HOME SECTION ---
+# --- HOME SECTION (WITH PROMINENT PROFILE PICTURE) ---
 if section == "Home":
-    col_intro, col_img = st.columns([2, 1])
+    col_img, col_intro = st.columns([1, 2.5])
+
+    with col_img:
+        if encoded_image:
+            st.markdown(
+                f"""
+                <div style="text-align: center; padding-top: 10px; margin-bottom: 20px;">
+                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-width: 240px; border-radius: 16px; object-fit: cover; box-shadow: 0 8px 16px rgba(0,0,0,0.15); border: 4px solid #1f77b4;">
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+        st.info("📍 **Location:** Lusaka, Zambia / Africa CDC\n\n📧 **Email:** medo.talib99@gmail.com\n\n📱 **Phone:** +249912559111")
+
     with col_intro:
         st.markdown('<p class="main-header">Mohamed Mahmoud Talib, MSc</p>', unsafe_allow_html=True)
         st.markdown('<p class="sub-header">Public Health Informatics Professional | Africa CDC</p>', unsafe_allow_html=True)
@@ -87,18 +100,7 @@ if section == "Home":
             "With over **seven years of experience**, I support academic researchers, postgraduate students, and humanitarian institutions in achieving rigorous scientific output and impactful program design."
         )
 
-    with col_img:
-        if encoded_image:
-            st.markdown(
-                f"""
-                <div style="text-align: center; padding-top: 10px;">
-                    <img src="data:image/jpeg;base64,{encoded_image}" style="width: 100%; max-height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 12px rgba(0,0,0,0.1);">
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        st.info("📍 **Location:** Lusaka, Zambia / Africa CDC\n\n📧 **Email:** medo.talib99@gmail.com\n\n📱 **Phone:** +249912559111")
-
+    st.write("---")
     st.subheader("Core Expertise & Pillars")
     c1, c2, c3 = st.columns(3)
     with c1:
@@ -292,33 +294,4 @@ elif section == "Contact":
                 
                 <div style="margin-bottom: 15px;">
                     <label><b>Your Email / Organization</b></label><br>
-                    <input type="text" name="email_or_org" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label><b>Inquiry Type</b></label><br>
-                    <select name="inquiry_type" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                        <option>Student Research Support</option>
-                        <option>Services for Organizations (M&E & Proposals)</option>
-                        <option>Professional Collaboration</option>
-                        <option>Other</option>
-                    </select>
-                </div>
-                
-                <div style="margin-bottom: 15px;">
-                    <label><b>Brief Message</b></label><br>
-                    <textarea name="message" rows="4" required style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label><b>Attach Document / Proposal / Photo (PDF or Image)</b></label><br>
-                    <input type="file" name="attachment" accept=".pdf,.png,.jpg,.jpeg" style="width: 100%; padding: 5px;">
-                </div>
-                
-                <button type="submit" style="background-color: #1f77b4; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                    Submit Inquiry
-                </button>
-            </form>
-            """,
-            unsafe_allow_html=True,
-        )
+                    <input type="text" name="email
